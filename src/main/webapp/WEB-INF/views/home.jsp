@@ -5,10 +5,15 @@
 	<title>Home</title>
 </head>
 <body>
+
 <h1>
 	Hello world!  
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
+
+<a href="notice/noticeList">Notice gogosing</a>
+<a href="free/freeList">Freeggg</a>
 </body>
 </html>
+   
