@@ -36,18 +36,18 @@ public class FreeboardController {
 	}
 	@RequestMapping(value="freeView" , method=RequestMethod.GET )
 	public void freeView(Integer num,Model model) throws Exception{
-	
-	BoardDTO boardDTO= freeService.boardView(num);
+		int result = freeService.boardHit(num);
+		
+		if(result >0){
+		BoardDTO boardDTO= freeService.boardView(num);
 		model.addAttribute("dto", boardDTO);
-	
+		}
 
 	}
 	//write DB
 	@RequestMapping(value="freeWrite" , method=RequestMethod.GET )
 	public void freeWrite(Model model) throws Exception{
 		model.addAttribute("path","Write");
-		
-		
 	}
 	@RequestMapping(value="freeWrite" , method=RequestMethod.POST )
 	public String freeWrite(RedirectAttributes rd, FreeDTO freeDTO) throws Exception{
@@ -64,12 +64,9 @@ public class FreeboardController {
 	public String freeUpdate(Integer num, Model model) throws Exception{
 		
 BoardDTO boardDTO= freeService.boardView(num);		
-		
 		model.addAttribute("dto",boardDTO);
 		model.addAttribute("path", "Update");
-		
 		return "free/freeWrite";
-		
 	}
 	@RequestMapping(value="freeUpdate" , method=RequestMethod.POST )
 	public String freeUpdate(RedirectAttributes rd,FreeDTO freeDTO) throws Exception{
@@ -86,7 +83,14 @@ BoardDTO boardDTO= freeService.boardView(num);
 	}
 	
 	@RequestMapping(value="freeDelete" , method=RequestMethod.GET )
-	public void freeDelete(){
+	public String freeDelete(RedirectAttributes rd, int num) throws Exception{
+			int result = freeService.boardDelete(num);
+			String message="Fail Delete";
+			if(result > 0){
+				message="success delete";
+			}
+		rd.addAttribute("message",message);
 		
-	}
+		return "redirect:freeList?curPage=1";
+	}	
 }

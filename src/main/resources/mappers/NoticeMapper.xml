@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- Mapper 파일 입니다 라고 셋팅시킴. -->
+  
+  <mapper namespace="NoticeMapper" > <!-- 파일명 쓰기 .xml 제외 -->
+  	<!-- View Query  -->											<!-- 래퍼런스 적기 -->
+  	<select id="view" resultType="com.choa.notice.NoticeDTO" parameterType="java.lang.Integer" >
+  	 <!-- return type BoardDTO - > noticeDTO -->
+  	select * from notice where num=#{num}
+  	</select>
+  	
+  	<!-- insert -->
+  	<insert id="write" parameterType="com.choa.notice.NoticeDTO">
+  	insert into notice values(notice_seq.nextval,#{writer},#{title},#{contents},sysdate,0)
+  	</insert>
+		
+	<!-- update -->
+		<update id="update" parameterType="com.choa.notice.NoticeDTO">
+		update notice set writer=#{writer},title=#{title},contents=#{contents} where num=#{num}
+		</update>
+	<!-- delete -->
+	
+	<delete id="delete" parameterType="java.lang.Integer">
+	delete notice where num =#{num}
+	</delete>
+	
+	<select id="list" resultType="com.choa.notice.NoticeDTO" parameterType="com.choa.util.RowMaker">
+	select * from (select rownum R,N.* from (select * from notice order by num desc) N) where R between #{startRow} and #{lastRow}
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+select nvl(count(num),0) from notice
+	</select>
+	
+  	
+  </mapper>
+  

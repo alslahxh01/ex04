@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 선언부 @@@@@@@@@Context 쓰고싶으면 접두어를 쓰면 된다.-->
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		
 		
 		
-			<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">	
+	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">	
 		<property name="username" value="user03"></property>
 		<property name="password" value="user03"></property>
 		<property name="url" value="jdbc:oracle:thin:@192.168.20.4:1521:xe"></property>
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
 	</bean>
+	<!-- MYbatis 코드 -->
+	
+	<!-- xml에 하는 이유? api를 이용하기 때문에 소스코드를 못 열어서 -->
+	<!-- 커넥션 객체와 SQl을 섞어서 DB 와 Spring 연결 -->
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactoryBean">
+	<!-- setter 를 이용하여 데이터 집어넣기 -->
+	<property name="dataSource" ref="dataSource"></property>
+	<!-- mappers 폴더에 ??Mapper.xml 이라고 만들어놓자. -->
+	<property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property>
+	
+	</bean>
+	<!-- Mybatis 랑 소스코드 연결해주는 코드 -->
+<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession" > <!-- 빨간줄이유:생성자만들어달라 -->
+ <!-- 생성자를 이용해 ref 로 연결 -->
+ <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean"></constructor-arg>
+	
+</bean>	
+	<!-- 접두어 설정이 현재 안되어 있다.  Namespaces 에서 Context 체크  
+		
+	-->
+<!-- 		<context:component-scan base-package=""></context:component-scan> -->
 		
 		
+	
 </beans>

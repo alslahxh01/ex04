@@ -20,9 +20,14 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
-	<context:component-scan base-package="com.choa.ex4" />
-	<context:component-scan base-package="com.choa.notice" />
-	
+	<!--  스캔의 범위를 감소 시켜주기 -->
+	<context:component-scan base-package="com.choa.ex4" use-default-filters="false">
+											<!-- 해당 패키지내 파일속 Annotation 제외하고 스캔 -->
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	<context:component-scan base-package="com.choa.notice">
+	 <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	<!--Notice 에는 Controller가 없으니 exclude 에 추가-->
 	<context:component-scan base-package="com.choa.free" />
 </beans:beans>

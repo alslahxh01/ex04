@@ -21,6 +21,8 @@ public interface BoardService {
 	
 	//delete
 	public int boardDelete(int num) throws Exception;
+
+	public int boardHit(int num) throws Exception;
 	
 	
 	

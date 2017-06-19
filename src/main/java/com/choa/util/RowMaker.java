@@ -12,6 +12,7 @@ public class RowMaker {
 	
 	public int getLastRow() {
 		return lastRow;
+		
 	}
 	
 	public String getKind() {

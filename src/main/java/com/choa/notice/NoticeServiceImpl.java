@@ -55,6 +55,11 @@ public class NoticeServiceImpl implements BoardService{
 		return noticeDAO.boardDelete(num);
 	}
 
+	@Override
+	public int boardHit(int num) throws Exception {
+		return noticeDAO.boardHit(num);
+	}
+
 	
 	
 	

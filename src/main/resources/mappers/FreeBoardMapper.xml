@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="FreeBoardMapper">
+  <!--  hit -->
+  <update id="hit" parameterType="java.lang.Integer">
+  update free set hit = hit+1 where num = #{num}
+  </update>
+  
+  <!-- count -->
+  <select id="count" resultType="java.lang.Integer">
+  select nvl(count(num),0) from free
+  </select>
+  
+  <!--  View -->
+  
+  <select id="view" resultType="com.choa.free.FreeDTO" parameterType="java.lang.Integer">
+  select * from free where num = #{num}
+  </select>
+  
+  <!-- write -->
+  <insert id="write" parameterType="com.choa.free.FreeDTO">
+  insert into free values(free_seq.nextval,#{writer},#{title},#{contents},sysdate,0,0,0,0)
+  </insert>
+  <!-- Update -->
+  <update id="update" parameterType="com.choa.free.FreeDTO">
+  update free set writer=${writer},title=#{title},contents=#{contents} where num = #{num}
+  </update>
+  <!-- delete -->
+  
+  <delete id="delete" parameterType="java.lang.Integer">
+  delete free where num = #{num}
+  </delete>
+  
+  <select id="list" resultType="com.choa.free.FreeDTO" parameterType="com.choa.util.RowMaker">
+  select * from (select rownum R,N.* from (select * from free order by ref desc, step asc) N) where R between #{startRow} and #{lastRow}
+  </select>
+  
+  </mapper>
