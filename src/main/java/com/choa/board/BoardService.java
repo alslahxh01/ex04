@@ -2,13 +2,15 @@ package com.choa.board;
 
 import java.util.List;
 
+import com.choa.util.ListInfo;
+
 public interface BoardService {
 
 	
 		
 		
 	//List
-	public List<BoardDTO> boardList(int curPage) throws Exception;
+	public List<BoardDTO> boardList(ListInfo listInfo) throws Exception;
 	
 	//view
 	public BoardDTO boardView(int num) throws Exception;

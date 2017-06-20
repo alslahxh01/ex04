@@ -4,8 +4,7 @@ public class PageMaker {
 	private int perPage;
 	private int perBlock;
 	private int curPage;
-	private MakePage makePage;
-	private RowMaker rowMaker;
+
 	
 	public PageMaker(int perPage, int curPage, int perBlock){
 		this.perPage=perPage;

@@ -1,5 +1,6 @@
 package com.choa.ex4;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -16,6 +17,8 @@ import com.choa.board.BoardDTO;
 import com.choa.notice.NoticeDAOImpl;
 import com.choa.notice.NoticeDTO;
 import com.choa.notice.NoticeServiceImpl;
+import com.choa.util.ListInfo;
+import com.choa.util.PageMaker;
 
 @Controller
 @RequestMapping(value="/notice/**")
@@ -27,15 +30,19 @@ public class NoticeController {
 	
 	//List
 @RequestMapping(value="noticeList" , method=RequestMethod.GET )
-	public String noticeList(Model model, @RequestParam(defaultValue="1") Integer curPage) throws Exception{
-										//널이면 초기값 1로 만들기
-		List<BoardDTO> ar =noticeService.boardList(curPage);
+	public String noticeList(Model model, ListInfo listInfo) throws Exception{
+	
+	//1. curPage null 처리하기 - getter 에서 널이면 1 초기값 세팅
+		System.out.println(listInfo.getCurPage());
+	//2.Mapper 로 갈 때 4가지변수 한꺼번에 ㄱㄱ search,find, startRow,lastRow 
+	
+		List<BoardDTO> ar =noticeService.boardList(listInfo);
 		//얘를 noticeList.jsp 에 보내야한다
-		model.addAttribute("list",ar);
-		model.addAttribute("board","notice");
-		//뷰 경로가 board 에 board?? 로 가야함
+	
+		model.addAttribute("list",ar); //ArrayList
+		model.addAttribute("board","notice"); //Board타입이 뭔지?에 대한것
+		model.addAttribute("listInfo",listInfo); //현재페이지
 		return "board/boardList";
-		
 }	
 
 	//View

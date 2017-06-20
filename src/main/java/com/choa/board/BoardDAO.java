@@ -2,11 +2,11 @@ package com.choa.board;
 
 import java.util.List;
 
-import com.choa.util.RowMaker;
+import com.choa.util.ListInfo;
 
 public interface BoardDAO {
 	//list
-	public List<BoardDTO> boardList(RowMaker rowMaker) throws Exception;
+	public List<BoardDTO> boardList(ListInfo listInfo) throws Exception;
 	//view 
 	public BoardDTO boardView(int num) throws Exception;
 	//write
@@ -16,7 +16,7 @@ public interface BoardDAO {
 	
 	public int boardDelete(int num) throws Exception;
 	
-	public int boardCount() throws Exception; //검색어 는 나중에 추가.
+	public int boardCount(ListInfo listInfo) throws Exception;
 	
 	public int boardHit(int num) throws Exception;
 

@@ -3,6 +3,7 @@ package com.choa.notice;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.choa.board.BoardDAO;
 import com.choa.board.BoardDTO;
 import com.choa.util.DBConnector;
+import com.choa.util.ListInfo;
 import com.choa.util.RowMaker;
 @Repository
 public class NoticeDAOImpl implements BoardDAO {
@@ -24,14 +26,11 @@ public class NoticeDAOImpl implements BoardDAO {
 	private static final String NAMESPACE="NoticeMapper."; //final이 붙으면 상수처럼 써라 불변임.
 					//상수의 변수명은 대문자로
 	@Override
-	public List<BoardDTO> boardList(RowMaker rowMaker) throws Exception {
-		
-			
-	
-		return sqlSession.selectList(NAMESPACE+"list", rowMaker);
+	public List<BoardDTO> boardList(ListInfo listInfo) throws Exception {
+		//받아온 3개의 변수를 다 하나로 모와야함 컬렉션 계열로 만들어보자
+		//HashMap,ArrayList중 하나쓰자 Map을 쓸 예정
+		return sqlSession.selectList(NAMESPACE+"list", listInfo);
 	}
-
-	
 	@Override
 	public BoardDTO boardView(int num) throws Exception {
 			
@@ -44,8 +43,6 @@ public class NoticeDAOImpl implements BoardDAO {
 		return boardDTO;
 	}
 
-
-	
 	@Override
 	public int boardWrite(BoardDTO boardDTO) throws Exception {
 		return sqlSession.insert(NAMESPACE+"write",boardDTO);
@@ -57,20 +54,14 @@ public class NoticeDAOImpl implements BoardDAO {
 
 		return sqlSession.update(NAMESPACE+"update", boardDTO);
 	}
-
-
 	@Override
 	public int boardDelete(int num) throws Exception {
 	return sqlSession.delete(NAMESPACE+"delete", num);
 	}
 
-
-	
 	@Override
-	public int boardCount() throws Exception {
-		
-		System.out.println(sqlSession.selectOne(NAMESPACE+"count"));
-		return sqlSession.selectOne(NAMESPACE+"count");
+	public int boardCount(ListInfo listInfo) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"count",listInfo);
 	}
 
 

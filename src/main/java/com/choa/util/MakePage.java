@@ -5,6 +5,7 @@ public class MakePage {
 	private int totalBlock;
 	private int startNum;
 	private int lastNum;
+	
 	public int getCurBlock() {
 		return curBlock;
 	}

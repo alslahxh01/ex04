@@ -1,7 +1,9 @@
 package com.choa.notice;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotEquals;
+
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -9,6 +11,8 @@ import org.junit.Test;
 
 import com.choa.board.BoardDTO;
 import com.choa.ex4.MyAbcstractTest;
+import com.choa.util.ListInfo;
+import com.choa.util.PageMaker;
 //테스트 하기 위해 이 클레스한테 xml이 어디에 있다고 알려주는 코드 2줄
 //@@@@@@@@@
 public class NoticeDAOImplTest extends MyAbcstractTest{
@@ -37,9 +41,23 @@ public class NoticeDAOImplTest extends MyAbcstractTest{
 	}
 	@Test
 	public void testCount() throws Exception{
-		int resultCount = noticeDAOImpl.boardCount();
-		System.out.println("count : "+resultCount);
+			ListInfo listInfo = new ListInfo();
+			listInfo.setFind("choa");
+			listInfo.setSearch("writer");
+			int count = noticeDAOImpl.boardCount(listInfo);
+				System.out.println(count);
+			assertNotEquals(0, count);
+
 		
+//		PageMaker pageMaker = new PageMaker(1);
+//
+//		List<BoardDTO> ar=  noticeDAOImpl.boardList(pageMaker.getRowMaker(),"writer","choa");
+//		System.out.println(ar.size());
+//		for(int i=0; i<ar.size(); i++){
+//			System.out.println(ar.get(i).getTitle());
+//			
+//		}
+//		
 	}
 	
 

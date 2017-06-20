@@ -5,6 +5,20 @@
   <!-- Mapper 파일 입니다 라고 셋팅시킴. -->
   
   <mapper namespace="NoticeMapper" > <!-- 파일명 쓰기 .xml 제외 -->
+  
+  <sql id="search">
+  <trim prefix="where" prefixOverrides="and // or"> <!-- where 조건에 걸리지 않다면 where를 사용하지 않겠다는 코드 -->
+	<if test="search == 'title'">
+	title like '%' || #{find} || '%'
+	</if>
+	<if test="search == 'writer'">
+	writer like '%' || #{find} || '%'
+	</if> 
+	<if test="search == 'contents'">
+	contents like '%' || #{find} || '%'
+	</if>
+	</trim>
+  </sql>
   	<!-- View Query  -->											<!-- 래퍼런스 적기 -->
   	<select id="view" resultType="com.choa.notice.NoticeDTO" parameterType="java.lang.Integer" >
   	 <!-- return type BoardDTO - > noticeDTO -->
@@ -26,12 +40,15 @@
 	delete notice where num =#{num}
 	</delete>
 	
-	<select id="list" resultType="com.choa.notice.NoticeDTO" parameterType="com.choa.util.RowMaker">
-	select * from (select rownum R,N.* from (select * from notice order by num desc) N) where R between #{startRow} and #{lastRow}
+	<select id="list" resultType="com.choa.notice.NoticeDTO" parameterType="com.choa.util.ListInfo">
+	select * from (select rownum R,N.* from (select * from notice
+	<include refid="search"></include>
+	order by num desc) N) where R between #{startRow} and #{lastRow}
 	</select>
 
-	<select id="count" resultType="java.lang.Integer">
-select nvl(count(num),0) from notice
+	<select id="count" resultType="java.lang.Integer" parameterType="com.choa.util.ListInfo">
+	select nvl(count(num),0) from notice
+	<include refid="search"></include>
 	</select>
 	
   	
