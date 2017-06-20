@@ -12,6 +12,21 @@
 
 <H1>${board} </H1>
 
+
+<div>
+<form action="${board}List"> <!-- 검색해도 List형식으로 보여줘야 한다. -->
+<select name="seacrh">
+<option value="title">Title</option>
+<option value="writer">Writer</option>
+<option value="contents">Contents</option>
+</select>
+<input type="text" name="find">
+<input type="submit" value="Search">
+</form>
+</div>
+
+
+
 <table>
 <tr>
 <td>Num</td>

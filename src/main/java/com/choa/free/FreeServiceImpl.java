@@ -47,9 +47,9 @@ public class FreeServiceImpl implements BoardService {
 	
 	@Override
 	public int boardHit(int num) throws Exception{
-		System.out.println("Service 에서 num 값 "+num);
-		int result = freeDAO.boardHit(num);
-		return result;
+
+		return freeDAO.boardHit(num);
+		
 	}
 	
 	
